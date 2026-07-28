@@ -1,0 +1,52 @@
+{
+  "shopTracking": {
+    "title": "Suivi logistique",
+    "selectStage": "Sélectionner l'étape",
+    "notePlaceholder": "Note facultative (ex. dédouané au port de Lagos, transporteur : GIG)",
+    "updateStage": "Mettre à jour l'étape",
+    "history": "Historique",
+    "updated": "Suivi mis à jour",
+    "updateFailed": "Échec de la mise à jour du suivi",
+    "stages": {
+      "processing": "En préparation",
+      "dispatched": "Expédiée",
+      "customs": "Dédouanement",
+      "out_for_delivery": "En cours de livraison",
+      "delivered": "Livrée"
+    }
+  },
+  "login": {
+    "title": "Bienvenue chez shop"
+  },
+  "invite": {
+    "title": "Bienvenue chez shop"
+  },
+  "shopWholesale": {
+    "title": "Demandes de compte grossiste",
+    "label": "Grossiste",
+    "refresh": "Actualiser",
+    "loading": "Chargement…",
+    "empty": "Aucune demande de grossiste pour l’instant.",
+    "company": "Entreprise",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "volume": "Volume prévu",
+    "statusCol": "Statut",
+    "actions": "Actions",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "revoke": "Révoquer l’accès",
+    "cancel": "Annuler",
+    "updated": "Demande mise à jour",
+    "updateFailed": "Échec de la mise à jour",
+    "confirmApproveTitle": "Approuver la demande de grossiste ?",
+    "confirmApproveBody": "{{company}} sera ajouté au groupe Grossiste et bénéficiera de tarifs négociés.",
+    "confirmRejectTitle": "Rejeter la demande de grossiste ?",
+    "confirmRejectBody": "{{company}} ne bénéficiera pas des tarifs de gros.",
+    "status": {
+      "pending": "En attente",
+      "approved": "Approuvée",
+      "rejected": "Rejetée"
+    }
+  }
+}

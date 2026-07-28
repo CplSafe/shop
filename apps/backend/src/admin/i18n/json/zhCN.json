@@ -1,0 +1,52 @@
+{
+  "shopTracking": {
+    "title": "物流追踪",
+    "selectStage": "选择物流阶段",
+    "notePlaceholder": "备注（可选，如：拉各斯港已清关，承运商：GIG）",
+    "updateStage": "更新阶段",
+    "history": "历史记录",
+    "updated": "物流状态已更新",
+    "updateFailed": "物流状态更新失败",
+    "stages": {
+      "processing": "处理中",
+      "dispatched": "已发货",
+      "customs": "清关中",
+      "out_for_delivery": "派送中",
+      "delivered": "已签收"
+    }
+  },
+  "login": {
+    "title": "欢迎来到 shop"
+  },
+  "invite": {
+    "title": "欢迎来到 shop"
+  },
+  "shopWholesale": {
+    "title": "批发资质申请",
+    "label": "批发申请",
+    "refresh": "刷新",
+    "loading": "加载中…",
+    "empty": "暂无批发申请。",
+    "company": "公司",
+    "email": "邮箱",
+    "phone": "电话",
+    "volume": "预计采购量",
+    "statusCol": "状态",
+    "actions": "操作",
+    "approve": "批准",
+    "reject": "拒绝",
+    "revoke": "取消资格",
+    "cancel": "取消",
+    "updated": "申请已更新",
+    "updateFailed": "更新申请失败",
+    "confirmApproveTitle": "批准批发资质申请？",
+    "confirmApproveBody": "{{company}} 将被加入 Wholesale 分组并享受协商价。",
+    "confirmRejectTitle": "拒绝批发资质申请？",
+    "confirmRejectBody": "{{company}} 将不会获得批发价。",
+    "status": {
+      "pending": "待审核",
+      "approved": "已批准",
+      "rejected": "已拒绝"
+    }
+  }
+}

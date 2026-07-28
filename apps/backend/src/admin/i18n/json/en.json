@@ -1,0 +1,52 @@
+{
+  "shopTracking": {
+    "title": "Logistics tracking",
+    "selectStage": "Select stage",
+    "notePlaceholder": "Optional note (e.g. cleared Lagos port, courier: GIG)",
+    "updateStage": "Update stage",
+    "history": "History",
+    "updated": "Tracking updated",
+    "updateFailed": "Failed to update tracking",
+    "stages": {
+      "processing": "Processing",
+      "dispatched": "Dispatched",
+      "customs": "Customs clearance",
+      "out_for_delivery": "Out for delivery",
+      "delivered": "Delivered"
+    }
+  },
+  "login": {
+    "title": "Welcome to shop"
+  },
+  "invite": {
+    "title": "Welcome to shop"
+  },
+  "shopWholesale": {
+    "title": "Wholesale Applications",
+    "label": "Wholesale",
+    "refresh": "Refresh",
+    "loading": "Loading…",
+    "empty": "No wholesale applications yet.",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "volume": "Expected volume",
+    "statusCol": "Status",
+    "actions": "Actions",
+    "approve": "Approve",
+    "reject": "Reject",
+    "revoke": "Revoke access",
+    "cancel": "Cancel",
+    "updated": "Application updated",
+    "updateFailed": "Failed to update application",
+    "confirmApproveTitle": "Approve wholesale application?",
+    "confirmApproveBody": "{{company}} will be added to the Wholesale group and get negotiated pricing.",
+    "confirmRejectTitle": "Reject wholesale application?",
+    "confirmRejectBody": "{{company}} will not receive wholesale pricing.",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  }
+}
