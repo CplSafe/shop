@@ -7,6 +7,11 @@
  * Industrial slate primary + stock green accent, strict grid, high contrast.
  */
 :root {
+  /* Keep production builds independent from Google Fonts availability. */
+  --font-inter: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-space-grotesk: "Space Grotesk", Inter, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --shop-primary: #334155; /* slate */
   --shop-primary-fg: #ffffff;
   --shop-ink: #0f172a; /* near-black foreground */
@@ -73,7 +78,7 @@
 
   /* --- shop editorial utilities --- */
   .shop-display {
-    font-family: var(--font-space-grotesk), Inter, sans-serif;
+    font-family: var(--font-space-grotesk);
     letter-spacing: -0.02em;
   }
 
