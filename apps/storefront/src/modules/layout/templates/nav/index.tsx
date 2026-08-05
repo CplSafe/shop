@@ -9,8 +9,10 @@ import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 import LanguageSwitcher from "@modules/layout/components/language-switcher"
 import { getActiveLocale, getTranslations } from "@lib/i18n/get-translations"
+import { getStoreName } from "@lib/util/env"
 
 export default async function Nav() {
+  const storeName = getStoreName()
   const [regions, locales, currentLocale, activeLocale, t, tMenu, tFooter] =
     await Promise.all([
       listRegions().then((regions: StoreRegion[]) => regions),
@@ -29,6 +31,7 @@ export default async function Nav() {
     account: tMenu("account"),
     cart: tMenu("cart"),
     rights: tFooter("rights"),
+    storeName,
   }
 
   return (
@@ -52,7 +55,7 @@ export default async function Nav() {
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
               data-testid="nav-store-link"
             >
-              shop
+              {storeName}
             </LocalizedClientLink>
           </div>
 

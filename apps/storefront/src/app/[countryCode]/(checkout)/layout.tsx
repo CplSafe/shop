@@ -1,6 +1,7 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import { getTranslations } from "@lib/i18n/get-translations"
+import { getStoreName } from "@lib/util/env"
 
 export default async function CheckoutLayout({
   children,
@@ -8,6 +9,7 @@ export default async function CheckoutLayout({
   children: React.ReactNode
 }) {
   const t = await getTranslations("checkout")
+  const storeName = getStoreName()
   return (
     <div className="w-full bg-white relative small:min-h-screen">
       <div className="h-16 bg-white border-b ">
@@ -30,7 +32,7 @@ export default async function CheckoutLayout({
             className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
-            shop
+            {storeName}
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>

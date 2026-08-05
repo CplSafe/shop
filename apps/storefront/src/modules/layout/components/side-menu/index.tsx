@@ -18,6 +18,7 @@ export type SideMenuLabels = {
   account: string
   cart: string
   rights: string
+  storeName: string
 }
 
 type SideMenuProps = {
@@ -140,7 +141,8 @@ const SideMenu = ({
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} shop. {labels.rights}
+                        © {new Date().getFullYear()} {labels.storeName}.{" "}
+                        {labels.rights}
                       </Text>
                     </div>
                   </div>

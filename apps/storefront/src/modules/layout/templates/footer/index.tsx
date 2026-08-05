@@ -4,8 +4,10 @@ import { Text, clx } from "@modules/common/components/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { getTranslations } from "@lib/i18n/get-translations"
+import { getStoreName } from "@lib/util/env"
 
 export default async function Footer() {
+  const storeName = getStoreName()
   const { collections } = await listCollections({
     fields: "*products",
   })
@@ -21,7 +23,7 @@ export default async function Footer() {
               href="/"
               className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             >
-              shop
+              {storeName}
             </LocalizedClientLink>
           </div>
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
@@ -113,7 +115,7 @@ export default async function Footer() {
         </div>
         <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
           <Text className="txt-compact-small">
-            © {new Date().getFullYear()} shop. {t("rights")}
+            © {new Date().getFullYear()} {storeName}. {t("rights")}
           </Text>
         </div>
       </div>

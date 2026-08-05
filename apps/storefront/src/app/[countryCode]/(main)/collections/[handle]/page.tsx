@@ -7,6 +7,7 @@ import { StoreCollection, StoreRegion } from "@medusajs/types"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { parseOptionValueIds } from "@lib/util/product-option-filters"
+import { getStoreName } from "@lib/util/env"
 
 type Props = {
   params: Promise<{ handle: string; countryCode: string }>
@@ -63,7 +64,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const metadata = {
-    title: `${collection.title} | shop`,
+    title: `${collection.title} | ${getStoreName()}`,
     description: `${collection.title} collection`,
   } as Metadata
 

@@ -6,6 +6,7 @@ import fr from "./messages/fr.json"
 import zh from "./messages/zh.json"
 import { AppLocale, DEFAULT_LOCALE } from "./config"
 import { interpolate } from "./interpolate"
+import { getStoreName } from "@lib/util/env"
 
 type Messages = typeof en
 
@@ -50,6 +51,9 @@ export function useT(namespace: keyof Messages) {
     const ns = dict[namespace] as Record<string, string> | undefined
     const fbNs = fallback[namespace] as Record<string, string> | undefined
     const template = ns?.[key] ?? fbNs?.[key] ?? key
-    return interpolate(template, params)
+    return interpolate(template, {
+      storeName: getStoreName(),
+      ...params,
+    })
   }
 }
