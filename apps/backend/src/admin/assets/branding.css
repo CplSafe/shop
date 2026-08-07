@@ -18,3 +18,9 @@ div:has(> svg[viewBox="0 0 36 38"]) {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* Remove Medusa framework links from the merchant-facing user menu. */
+[role="menu"] a[href^="https://docs.medusajs.com"],
+[role="menu"] a[href^="https://medusajs.com/changelog"] {
+  display: none !important;
+}
