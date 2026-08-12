@@ -27,7 +27,19 @@ export const listCategories = async (query?: Record<string, unknown>) => {
 }
 
 export const getCategoryByHandle = async (categoryHandle: string[]) => {
-  const handle = `${categoryHandle.join("/")}`
+  // Route segments arrive percent-encoded, so handles containing reserved
+  // characters (e.g. "food-&-staples") would otherwise be double-encoded by
+  // the SDK and never match. Decode before querying; tolerate malformed
+  // sequences rather than throwing on them.
+  const handle = categoryHandle
+    .map((segment) => {
+      try {
+        return decodeURIComponent(segment)
+      } catch {
+        return segment
+      }
+    })
+    .join("/")
 
   const next = {
     ...(await getCacheOptions("categories")),
