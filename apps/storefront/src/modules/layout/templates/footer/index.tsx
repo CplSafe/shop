@@ -1,122 +1,137 @@
 import { listCategories } from "@lib/data/categories"
-import { listCollections } from "@lib/data/collections"
-import { Text, clx } from "@modules/common/components/ui"
-
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { getTranslations } from "@lib/i18n/get-translations"
-import { getStoreName } from "@lib/util/env"
+import { getStoreName, getWhatsAppNumber } from "@lib/util/env"
+
+const MAX_FOOTER_CATEGORIES = 5
 
 export default async function Footer() {
   const storeName = getStoreName()
-  const { collections } = await listCollections({
-    fields: "*products",
-  })
-  const productCategories = await listCategories()
-  const t = await getTranslations("footer")
+  const whatsAppNumber = getWhatsAppNumber()
+  const [categories, t, tNav, tInquiry] = await Promise.all([
+    listCategories(),
+    getTranslations("footer"),
+    getTranslations("nav"),
+    getTranslations("inquiry"),
+  ])
+
+  const topCategories = (categories ?? [])
+    .filter((category) => !category.parent_category)
+    .slice(0, MAX_FOOTER_CATEGORIES)
+
+  const quickLinks = [
+    { href: "/store", label: tNav("all_products") },
+    { href: "/#services", label: tNav("services") },
+    { href: "/#factory", label: tNav("factory") },
+    { href: "/#contact", label: tNav("inquiry") },
+  ]
+
+  const markets = [
+    t("market_nigeria"),
+    t("market_kenya"),
+    t("market_togo"),
+  ]
 
   return (
-    <footer className="border-t border-ui-border-base w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+    <footer className="bg-[var(--shop-deep)] text-[#dfe8e1]">
+      <div className="content-container py-14 lg:py-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Brand */}
           <div>
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
-            >
-              {storeName}
+            <LocalizedClientLink href="/">
+              <span className="shop-display block text-2xl font-bold uppercase leading-none text-white">
+                {storeName}
+              </span>
+              <span className="mt-1.5 block text-[9px] font-medium uppercase tracking-[0.16em] text-[#a4b2aa]">
+                {tNav("company_tagline")}
+              </span>
             </LocalizedClientLink>
+            <p className="mt-4 max-w-xs text-sm leading-6 text-[#bfd0c6]">
+              {t("about_blurb")}
+            </p>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
-            {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  {t("categories")}
-                </span>
-                <ul
-                  className="grid grid-cols-1 gap-2"
-                  data-testid="footer-categories"
-                >
-                  {productCategories?.slice(0, 6).map((c) => {
-                    if (c.parent_category) {
-                      return
-                    }
 
-                    const children =
-                      c.category_children?.map((child) => ({
-                        name: child.name,
-                        handle: child.handle,
-                        id: child.id,
-                      })) || null
+          {/* Quick links + real categories */}
+          <div>
+            <h4 className="shop-display text-base font-bold text-white">
+              {t("quick_links")}
+            </h4>
+            <ul className="mt-4 space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <LocalizedClientLink
+                    href={link.href}
+                    className="text-sm text-[#bfd0c6] transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </LocalizedClientLink>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-                    return (
-                      <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
-                        key={c.id}
-                      >
-                        <LocalizedClientLink
-                          className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
-                          )}
-                          href={`/categories/${c.handle}`}
-                          data-testid="category-link"
-                        >
-                          {c.name}
-                        </LocalizedClientLink>
-                        {children && (
-                          <ul className="grid grid-cols-1 ml-3 gap-2">
-                            {children &&
-                              children.map((child) => (
-                                <li key={child.id}>
-                                  <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
-                                    href={`/categories/${child.handle}`}
-                                    data-testid="category-link"
-                                  >
-                                    {child.name}
-                                  </LocalizedClientLink>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
+          <div>
+            <h4 className="shop-display text-base font-bold text-white">
+              {t("categories")}
+            </h4>
+            {topCategories.length > 0 ? (
+              <ul className="mt-4 space-y-2" data-testid="footer-categories">
+                {topCategories.map((category) => (
+                  <li key={category.id}>
+                    <LocalizedClientLink
+                      href={`/categories/${category.handle}`}
+                      className="text-sm text-[#bfd0c6] transition-colors hover:text-white"
+                      data-testid="category-link"
+                    >
+                      {category.name}
+                    </LocalizedClientLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul className="mt-4 space-y-2">
+                {markets.map((market) => (
+                  <li key={market} className="text-sm text-[#bfd0c6]">
+                    {market}
+                  </li>
+                ))}
+              </ul>
             )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  {t("collections")}
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="shop-display text-base font-bold text-white">
+              {t("contact")}
+            </h4>
+            <ul className="mt-4 space-y-2 text-sm text-[#bfd0c6]">
+              <li>{t("factory_area")}</li>
+              <li>{t("office")}</li>
+              <li>
+                <span className="block text-[#a4b2aa]">
+                  {t("regional_markets")}
                 </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
-                >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                {markets.join(" · ")}
+              </li>
+              {whatsAppNumber && (
+                <li>
+                  <a
+                    href={`https://wa.me/${whatsAppNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-white"
+                  >
+                    {tInquiry("info_whatsapp", { number: whatsAppNumber })}
+                  </a>
+                </li>
+              )}
+            </ul>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
-            © {new Date().getFullYear()} {storeName}. {t("rights")}
-          </Text>
+
+        <div className="mt-12 border-t border-white/10 pt-6 text-xs text-[#9db0a4]">
+          © {new Date().getFullYear()} {storeName} International Cosmetics
+          Company. {t("rights")}
         </div>
       </div>
     </footer>

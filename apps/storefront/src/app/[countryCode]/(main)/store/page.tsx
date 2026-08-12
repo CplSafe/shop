@@ -13,6 +13,7 @@ type StorePageSearchParams = Record<string, string | string[] | undefined> & {
   sortBy?: SortOptions
   page?: string
   optionValueIds?: string | string[]
+  categoryId?: string | string[]
 }
 
 type Params = {
@@ -23,10 +24,15 @@ type Params = {
 }
 
 export default async function StorePage(props: Params) {
-  const params = await props.params;
-  const searchParams = await props.searchParams;
-  const { sortBy, page } = searchParams
+  const params = await props.params
+  const searchParams = await props.searchParams
+  const { sortBy, page, categoryId } = searchParams
   const optionValueIds = parseOptionValueIds(searchParams)
+
+  // Repeated ?categoryId= params arrive as an array; the filter is single-select.
+  const selectedCategoryId = Array.isArray(categoryId)
+    ? categoryId[0]
+    : categoryId
 
   return (
     <StoreTemplate
@@ -34,6 +40,7 @@ export default async function StorePage(props: Params) {
       page={page}
       countryCode={params.countryCode}
       optionValueIds={optionValueIds}
+      categoryId={selectedCategoryId}
     />
   )
 }

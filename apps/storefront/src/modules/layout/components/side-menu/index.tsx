@@ -10,6 +10,7 @@ import { Fragment } from "react"
 import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
 import { Locale } from "@lib/data/locales"
+import { CategoryMenuItem } from "../category-menu"
 
 export type SideMenuLabels = {
   menu: string
@@ -26,6 +27,9 @@ type SideMenuProps = {
   locales: Locale[] | null
   currentLocale: string | null
   labels: SideMenuLabels
+  /** Top-level product categories shown under the main links on mobile. */
+  categories?: CategoryMenuItem[]
+  categoriesLabel?: string
 }
 
 const SideMenu = ({
@@ -33,6 +37,8 @@ const SideMenu = ({
   locales,
   currentLocale,
   labels,
+  categories = [],
+  categoriesLabel,
 }: SideMenuProps) => {
   const menuItems: { key: keyof SideMenuLabels; href: string }[] = [
     { key: "home", href: "/" },
@@ -86,22 +92,63 @@ const SideMenu = ({
                         <XMark />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {menuItems.map(({ key, href }) => {
-                        return (
-                          <li key={key}>
-                            <LocalizedClientLink
-                              href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
-                              onClick={close}
-                              data-testid={`${key}-link`}
-                            >
-                              {labels[key]}
-                            </LocalizedClientLink>
-                          </li>
-                        )
-                      })}
-                    </ul>
+                    <div className="flex flex-1 flex-col gap-8 overflow-y-auto py-4">
+                      <ul className="flex flex-col gap-6 items-start justify-start">
+                        {menuItems.map(({ key, href }) => {
+                          return (
+                            <li key={key}>
+                              <LocalizedClientLink
+                                href={href}
+                                className="text-3xl leading-10 hover:text-ui-fg-disabled"
+                                onClick={close}
+                                data-testid={`${key}-link`}
+                              >
+                                {labels[key]}
+                              </LocalizedClientLink>
+                            </li>
+                          )
+                        })}
+                      </ul>
+
+                      {categories.length > 0 && (
+                        <div>
+                          {categoriesLabel && (
+                            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">
+                              {categoriesLabel}
+                            </span>
+                          )}
+                          <ul className="mt-3 flex flex-col gap-3">
+                            {categories.map((category) => (
+                              <li key={category.id}>
+                                <LocalizedClientLink
+                                  href={`/categories/${category.handle}`}
+                                  className="text-lg hover:text-ui-fg-disabled"
+                                  onClick={close}
+                                  data-testid="side-menu-category-link"
+                                >
+                                  {category.name}
+                                </LocalizedClientLink>
+                                {category.children.length > 0 && (
+                                  <ul className="ml-3 mt-1.5 flex flex-col gap-1.5">
+                                    {category.children.map((child) => (
+                                      <li key={child.id}>
+                                        <LocalizedClientLink
+                                          href={`/categories/${child.handle}`}
+                                          className="text-sm text-white/70 hover:text-white"
+                                          onClick={close}
+                                        >
+                                          {child.name}
+                                        </LocalizedClientLink>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                     <div className="flex flex-col gap-y-6">
                       {!!locales?.length && (
                         <div

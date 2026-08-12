@@ -9,17 +9,25 @@ import {
 } from "@lib/util/product-option-filters"
 import OptionsPicker from "./options-picker"
 import SortProducts, { SortOptions } from "./sort-products"
+import CategoryFilter, { CategoryFilterOption } from "./category-filter"
+
+export const CATEGORY_QUERY_KEY = "categoryId"
 
 type RefinementListProps = {
   sortBy: SortOptions
   search?: boolean
   hideOptionsPicker?: boolean
+  /** Omitted on category pages, where the route already scopes the listing. */
+  categories?: CategoryFilterOption[]
+  categoryLabels?: { heading: string; all: string }
   "data-testid"?: string
 }
 
 const RefinementList = ({
   sortBy,
   hideOptionsPicker = false,
+  categories = [],
+  categoryLabels,
   "data-testid": dataTestId,
 }: RefinementListProps) => {
   const router = useRouter()
@@ -63,6 +71,17 @@ const RefinementList = ({
       )
     })
 
+  const selectedCategoryId = searchParams.get(CATEGORY_QUERY_KEY) ?? undefined
+
+  const setCategoryId = (categoryId: string | null) =>
+    updateQueryParams((params) => {
+      if (categoryId) {
+        params.set(CATEGORY_QUERY_KEY, categoryId)
+      } else {
+        params.delete(CATEGORY_QUERY_KEY)
+      }
+    })
+
   return (
     <div className="flex flex-col gap-12 py-4 mb-8 small:px-0 pl-6 small:min-w-[250px] small:ml-[1.675rem]">
       <SortProducts
@@ -70,6 +89,14 @@ const RefinementList = ({
         setQueryParams={setQueryParams}
         data-testid={dataTestId}
       />
+      {categories.length > 0 && categoryLabels && (
+        <CategoryFilter
+          categories={categories}
+          selectedId={selectedCategoryId}
+          labels={categoryLabels}
+          onSelect={setCategoryId}
+        />
+      )}
       {!hideOptionsPicker && (
         <OptionsPicker
           selectedValueIds={selectedOptionValueIds}

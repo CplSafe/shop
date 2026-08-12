@@ -14,7 +14,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang={htmlLang} data-mode="light">
-      <body className="antialiased">
+      <body className="antialiased bg-[var(--shop-bg)] text-[var(--shop-ink)]">
         <I18nProvider locale={locale}>
           <main className="relative">{props.children}</main>
         </I18nProvider>
