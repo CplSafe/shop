@@ -68,7 +68,7 @@ const Hero = async () => {
         <div className="lg:col-span-6">
           <div className="shop-card relative aspect-[4/3] w-full">
             <Image
-              src="/images/yezi/hero-lineup.webp"
+              src="/images/yezi/hero-factory-campus.webp"
               alt={t("visual_alt")}
               fill
               priority

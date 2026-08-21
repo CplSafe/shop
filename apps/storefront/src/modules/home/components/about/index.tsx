@@ -35,7 +35,7 @@ export default async function About() {
         <div className="shop-card bg-[var(--shop-bg)]">
           <div className="relative aspect-[16/10]">
             <Image
-              src="/images/yezi/category-lotion-cream-soap.webp"
+              src="/images/yezi/hero-lineup.webp"
               alt={t("card_title")}
               fill
               loading="lazy"
